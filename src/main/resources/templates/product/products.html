@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>products</title>
+</head>
+<body>
+	<a th:if="${roles.contains('ROLE_MEMBER')}" href="/logout">LOGOUT</a>
+	<a th:unless="${roles.contains('ROLE_MEMBER')}" href="/login">LOGIN</a>
+	<h1>AFFICHAGE DES PRODUITS</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>NOM</th>
+				<th>PRIX</th>
+			</tr>
+		</thead>
+		<tbody>
+			<a th:href="@{product/create}">ADD product</a>
+			<tr th:each="product : ${products}">
+				<td th:if="${roles.contains('ROLE_MEMBER')}" th:href="@{/product/details/{id} (id=${product.id})}">
+				<a th:id="${product.name}" th:href="@{/product/details/{id} (id=${product.id})}" th:text="${product.name}"></a>
+				</td>
+				<td th:unless="${roles.contains('ROLE_MEMBER')}" th:href="@{/product/details/{id} (id=${product.id})}" th:text="${product.name}"></td>
+				<td th:text="${product.value}"></td>
+				
+				<td><a th:if="${roles.contains('ROLE_ADMIN')}" th:href="@{/product/edit/{id} (id=${product.id})}">Edit</a></td>
+				<td><a th:if="${roles.contains('ROLE_ADMIN')}" th:href="@{/product/delete/{id} (id=${product.id})}">Delete</a></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
